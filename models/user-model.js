@@ -2,7 +2,7 @@ const pool = require("../connection/connection-setup");
 const { v4: uuidv4 } = require("uuid");
 
 class Users {
-  static insertOne(email, password) {
+  static async insertOne(email, password) {
     return new Promise((resolve, reject) => {
       pool
         .query(
