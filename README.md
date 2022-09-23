@@ -1,9 +1,10 @@
 # Final-Project-1
 
-ENV VARIABLE EXAMPLE 
-PORT=
-PORT_DB=
-DB_NAME=
-PASSWORD_DB=
-USER_PG_DB=
-HOST_DB=
+## Todo
+
+- [] Penambahan JWT
+- [] Auth & Authorization
+- [] GET reflection
+- [] POST reflection
+- [] PUT relection/id
+- [] DELETE reflection/id
