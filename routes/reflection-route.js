@@ -1,7 +1,10 @@
 const router = require("express").Router();
 const reflectionController = require("../controllers/reflection-controller");
-
-router.route("/").get(reflectionController.getAllData).post();
+const bodyMiddleware = require("../middlewares/body-middleware");
+router
+  .route("/")
+  .get(reflectionController.getAllData)
+  .post(bodyMiddleware, reflectionController.postData);
 
 router.route("/:id").get().put().delete();
 
