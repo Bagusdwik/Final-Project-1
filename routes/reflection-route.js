@@ -1,19 +1,8 @@
 const router = require("express").Router();
+const reflectionController = require("../controllers/reflection-controller");
 
-router.get('/', (req, res) => {
-  // fill
-});
+router.route("/").get(reflectionController.getAllData).post();
 
-router.post('/', (req, res) => {
-  // fill
-});
-
-router.put('/:id', (req, res) => {
-  // fill
-});
-
-router.delete('/:id', (req, res) => {
-  // fill
-});
+router.route("/:id").get().put().delete();
 
 module.exports = router;
