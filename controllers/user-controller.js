@@ -14,7 +14,7 @@ class UserController {
     } catch (err) {
       res.status(404).send({
         status: "Failed",
-        message: err,
+        message: err.message,
       });
     }
   }
@@ -37,8 +37,10 @@ class UserController {
         token: tokenjwt,
       });
     } catch (err) {
+      console.log(err);
       res.send({
         status: "failed",
+        message: err,
       });
     }
   }
