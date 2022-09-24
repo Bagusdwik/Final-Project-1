@@ -1,6 +1,7 @@
 const pool = require("../connection/connection-setup");
 const { v4: uuidv4 } = require("uuid");
 const { type } = require("express/lib/response");
+const res = require("express/lib/response");
 class Reflection {
   insertOne(a) {
     return new Promise(async (resolve, reject) => {
@@ -39,6 +40,20 @@ class Reflection {
         resolve(rows);
       } catch (err) {
         reject(err);
+      }
+    });
+  }
+
+  deleteOne(id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await pool.query(
+          "DELETE FROM reflection where id=$1 RETURNING *",
+          [id]
+        );
+        resolve(result);
+      } catch (err) {
+        reject("Data not found");
       }
     });
   }

@@ -27,6 +27,17 @@ class ReflectionController {
       });
     }
   }
+
+  async deleteData(req, res) {
+    try {
+      const result = await reflection.deleteOne(req.params.id);
+
+      res.status(204).send({
+        status: "success",
+        message: null,
+      });
+    } catch (err) {}
+  }
 }
 
 module.exports = new ReflectionController();
