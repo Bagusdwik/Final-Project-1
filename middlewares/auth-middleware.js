@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 
 function authentication(req, res, next) {
   try {
-    const { auth } = req.headers;
-    console.log(auth);
+    const auth = req.headers["x-access-token"];
+
     const decoded = jwt.verify(auth, process.env.JWT_KEY);
 
     if (!decoded) {
