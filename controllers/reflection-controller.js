@@ -39,6 +39,22 @@ class ReflectionController {
       });
     } catch (err) {}
   }
+
+  async updateData(req, res) {
+    try {
+      const result = await reflection.update(req.params.id);
+      res.status(200).send({
+        message: "success update data",
+        data: result
+      });
+    } catch (error) {
+      res.send({
+        status: "failed update data",
+        message: err.message,
+      });
+    }
+    
+  }
 }
 
 module.exports = new ReflectionController();

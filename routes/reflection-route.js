@@ -6,6 +6,8 @@ router
   .get(reflectionController.getAllData)
   .post(bodyMiddleware, reflectionController.postData);
 
-router.route("/:id").put().delete(reflectionController.deleteData);
+router.route("/:id")
+  .put(reflectionController.updateData)
+  .delete(reflectionController.deleteData);
 
 module.exports = router;

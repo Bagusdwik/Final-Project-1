@@ -57,6 +57,26 @@ class Reflection {
       }
     });
   }
+
+  update(d) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const result = await pool.query(
+          "UPDATE reflection SET success = $2,low_point = $3,take_away = $4,owner_id = $5,created_date = $6,modified_date = $7 WHERE id = $1",
+          [id,
+            d.success,
+            d.low_point,
+            d.take_away,
+            d.owner_id,
+            d.created_date,
+            d.modified_date
+          ]
+        );
+      } catch (err) {
+        reject("Id not match");
+      }
+    })
+  }
 }
 
 module.exports = new Reflection();
