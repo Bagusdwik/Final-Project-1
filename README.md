@@ -2,9 +2,9 @@
 
 ## Todo
 
-- [] Penambahan JWT
-- [] Auth & Authorization
-- [] GET reflection
-- [] POST reflection
-- [] PUT relection/id
+- [x] Penambahan JWT
+- [x] Auth & Authorization
+- [x] GET reflection
+- [x] POST reflection
+- [x] PUT relection/id
 - [] DELETE reflection/id
