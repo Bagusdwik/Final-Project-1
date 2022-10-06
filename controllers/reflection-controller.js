@@ -37,20 +37,21 @@ class ReflectionController {
         status: "success",
         message: null,
       });
-    } catch (err) {}
+    } catch (err) {
+      res.send(err);
+    }
   }
 
   async updateData(req, res) {
     try {
-      const result = await reflection.update(req.params.id);
+      const result = await reflection.update(req.body);
       res.status(200).send({
         message: "success update data",
         data: result
       });
     } catch (error) {
-      res.send({
-        status: "failed update data",
-        message: err.message,
+      res.status(404).send({
+        message: "failed update data"
       });
     }
     
