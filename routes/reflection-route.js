@@ -7,7 +7,7 @@ router
   .post(bodyMiddleware, reflectionController.postData);
 
 router.route("/:id")
-  .put(reflectionController.updateData)
+  .put(bodyMiddleware, reflectionController.updateData)
   .delete(reflectionController.deleteData);
 
 module.exports = router;
