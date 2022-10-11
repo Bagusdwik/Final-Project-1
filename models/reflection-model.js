@@ -1,7 +1,6 @@
 const pool = require("../connection/connection-setup");
 const { v4: uuidv4 } = require("uuid");
-const { type } = require("express/lib/response");
-const res = require("express/lib/response");
+
 class Reflection {
   insertOne(a) {
     return new Promise(async (resolve, reject) => {
@@ -63,14 +62,14 @@ class Reflection {
       try {
         const result = await pool.query(
           `UPDATE reflection SET success = $1, low_point = $2, take_away = $3, owner_id = $4, created_date = $5, modified_date = $6 WHERE id = $7 RETURNING *`,
-          [ 
+          [
             data.success,
             data.low_point,
             data.take_away,
             data.owner_id,
             data.created_date,
             data.modified_date,
-            data.id
+            data.id,
           ]
         );
         resolve(result);
@@ -78,7 +77,7 @@ class Reflection {
       } catch (err) {
         reject("Id not match");
       }
-    })
+    });
   }
 }
 

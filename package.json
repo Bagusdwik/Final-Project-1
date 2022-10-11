@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "init": "node ./migrations/user-migration.js && node ./migrations/reflection-migration.js",
     "dev": "nodemon app.js",
     "start:prod": "SET NODE_ENV=production&&nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
