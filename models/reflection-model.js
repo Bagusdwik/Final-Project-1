@@ -73,7 +73,6 @@ class Reflection {
           ]
         );
         resolve(result);
-        console.log(result);
       } catch (err) {
         reject("Id not match");
       }
