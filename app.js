@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-const pool = require("./connection/connection-setup");
 const userRoute = require("./routes/user-route");
 const userReflections = require("./routes/reflection-route");
 const authentication = require("./middlewares/auth-middleware");
