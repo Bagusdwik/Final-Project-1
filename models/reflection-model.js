@@ -6,7 +6,7 @@ class Reflection {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await pool.query(
-          `INSERT INTO reflection(id,success,low_point,take_away,owner_id,created_date,modified_date)
+          `INSERT INTO reflections(id,success,low_point,take_away,owner_id,created_date,modified_date)
          VALUES($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
           [
             uuidv4(),
@@ -33,7 +33,7 @@ class Reflection {
     return new Promise(async (resolve, reject) => {
       try {
         const { rows } = await pool.query(
-          "SELECT * FROM reflection where owner_id=$1",
+          "SELECT * FROM reflections where owner_id=$1",
           [condition]
         );
         resolve(rows);
@@ -47,7 +47,7 @@ class Reflection {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await pool.query(
-          "DELETE FROM reflection where id=$1 RETURNING *",
+          "DELETE FROM reflections where id=$1 RETURNING *",
           [id]
         );
         resolve(result);
@@ -57,16 +57,30 @@ class Reflection {
     });
   }
 
-  update(data) {
+  findOne(id_data) {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await pool.query(
-          `UPDATE reflection SET success = $1, low_point = $2, take_away = $3, created_date = $4, modified_date = $5 WHERE id = $6 RETURNING *`,
+          `SELECT * FROM reflections where id=$1`,
+          [id_data]
+        );
+        resolve(result);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
+
+  update(data) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        data.modified_date = new Date();
+        const result = await pool.query(
+          `UPDATE reflections SET success = $1, low_point = $2, take_away = $3, modified_date = $4 WHERE id = $5 RETURNING *`,
           [
             data.success,
             data.low_point,
             data.take_away,
-            data.created_date,
             data.modified_date,
             data.id,
           ]

@@ -5,11 +5,11 @@ class UserController {
   static async insertUser(req, res) {
     const { email, password } = req.body;
     try {
-      const result = await Users.insertOne(email, password);
+      await Users.insertOne(email, password);
 
       res.status(201).send({
-        status: "test",
-        message: result,
+        status: "success",
+        message: "Data berhasil dibuat",
       });
     } catch (err) {
       res.status(404).send({
