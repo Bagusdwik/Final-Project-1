@@ -61,19 +61,17 @@ class Reflection {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await pool.query(
-          `UPDATE reflection SET success = $1, low_point = $2, take_away = $3, owner_id = $4, created_date = $5, modified_date = $6 WHERE id = $7 RETURNING *`,
+          `UPDATE reflection SET success = $1, low_point = $2, take_away = $3, created_date = $4, modified_date = $5 WHERE id = $6 RETURNING *`,
           [
             data.success,
             data.low_point,
             data.take_away,
-            data.owner_id,
             data.created_date,
             data.modified_date,
             data.id,
           ]
         );
         resolve(result);
-        console.log(result);
       } catch (err) {
         reject("Id not match");
       }

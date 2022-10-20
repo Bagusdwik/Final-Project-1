@@ -52,9 +52,11 @@ class ReflectionController {
 
   async updateData(req, res, next) {
     try {
+      const id = req.params.id;
+      const { success, low_point, take_away } = req.body;
       const result = await reflection.update(req.body);
       res.status(200).send({
-        status: "success",
+        status: "ok",
         message: "success update data",
         data: result,
       });
