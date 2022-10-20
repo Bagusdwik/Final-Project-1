@@ -5,6 +5,7 @@ class ReflectionController {
   async getAllData(req, res, next) {
     try {
       const result = await reflection.findAll(req.user.id);
+
       if (!result.length) {
         return next(new AppError("Data not found", 404));
       }
@@ -14,7 +15,7 @@ class ReflectionController {
         data: result,
       });
     } catch (err) {
-      next(new AppError("Fail to catch data", 404));
+      next(new AppError("Fail to catch data", 400));
     }
   }
 
@@ -29,17 +30,13 @@ class ReflectionController {
         },
       });
     } catch (err) {
-      res.send({
-        status: "failed",
-        message: err.message,
-      });
+      next(new AppError(err.message, 400));
     }
   }
-  //add test-commentar
 
   async deleteData(req, res, next) {
     try {
-      const result = await reflection.deleteOne(req.params.id);
+      await reflection.deleteOne(req.params.id);
 
       res.status(204).send({
         status: "success",
@@ -52,19 +49,26 @@ class ReflectionController {
 
   async updateData(req, res, next) {
     try {
-      const id = req.params.id;
-      const { success, low_point, take_away } = req.body;
+      const { id } = req.params;
+      const { id: userId } = req.user;
+      const getData = await reflection.findOne(id);
+      const { owner_id: ownerId } = getData.rows[0];
+
+      if (ownerId !== userId) {
+        return next(new AppError("data doesn't match", 403));
+      }
+
+      req.body.id = id;
+
       const result = await reflection.update(req.body);
+      console.log(req.user);
       res.status(200).send({
         status: "ok",
-        message: "success update data",
+        message: "Data has been updated",
         data: result,
       });
     } catch (error) {
-      res.status(404).send({
-        status: "fail",
-        message: "failed update data",
-      });
+      next(new AppError(error.message, 400));
     }
   }
 }
