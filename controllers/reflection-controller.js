@@ -6,16 +6,13 @@ class ReflectionController {
     try {
       const result = await reflection.findAll(req.user.id);
 
-      if (!result.length) {
-        return next(new AppError("Data not found", 404));
-      }
       res.status(200).send({
         message: "Success",
         total: result.length,
         data: result,
       });
     } catch (err) {
-      next(new AppError("Fail to catch data", 400));
+      next(new AppError("Fail to catch data", 404));
     }
   }
 
@@ -36,7 +33,8 @@ class ReflectionController {
 
   async deleteData(req, res, next) {
     try {
-      await reflection.deleteOne(req.params.id);
+      const data = { id: req.params.id, owner_id: req.user.id };
+      await reflection.deleteOne(data);
 
       res.status(204).send({
         status: "success",
@@ -50,14 +48,7 @@ class ReflectionController {
   async updateData(req, res, next) {
     try {
       const { id } = req.params;
-      const { id: userId } = req.user;
-      const getData = await reflection.findOne(id);
-      const { owner_id: ownerId } = getData.rows[0];
-
-      if (ownerId !== userId) {
-        return next(new AppError("data doesn't match", 403));
-      }
-
+      req.body.owner_id = req.user.id;
       req.body.id = id;
 
       const result = await reflection.update(req.body);

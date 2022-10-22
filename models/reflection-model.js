@@ -43,12 +43,12 @@ class Reflection {
     });
   }
 
-  deleteOne(id) {
+  deleteOne(data) {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await pool.query(
-          "DELETE FROM reflections where id=$1 RETURNING *",
-          [id]
+          "DELETE FROM reflections where id=$1 AND owner_id=$2 RETURNING *",
+          [data.id, data.owner_id]
         );
         resolve(result);
       } catch (err) {
@@ -76,13 +76,14 @@ class Reflection {
       try {
         data.modified_date = new Date();
         const result = await pool.query(
-          `UPDATE reflections SET success = $1, low_point = $2, take_away = $3, modified_date = $4 WHERE id = $5 RETURNING *`,
+          `UPDATE reflections SET success = $1, low_point = $2, take_away = $3, modified_date = $4 WHERE id = $5 AND owner_id=$6 RETURNING *`,
           [
             data.success,
             data.low_point,
             data.take_away,
             data.modified_date,
             data.id,
+            data.owner_id,
           ]
         );
         resolve(result);
