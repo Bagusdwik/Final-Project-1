@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require("uuid");
 class Reflection {
   insertOne(a) {
     return new Promise(async (resolve, reject) => {
+      console.log(a.owner_id);
       try {
         const result = await pool.query(
           `INSERT INTO reflections(id,success,low_point,take_away,owner_id,created_date,modified_date)
@@ -50,9 +51,10 @@ class Reflection {
           "DELETE FROM reflections where id=$1 AND owner_id=$2 RETURNING *",
           [data.id, data.owner_id]
         );
+        if (result.rows.length === 0) throw new Error("Data not found");
         resolve(result);
       } catch (err) {
-        reject("Data not found");
+        reject(err.message);
       }
     });
   }

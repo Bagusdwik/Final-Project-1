@@ -12,7 +12,7 @@ class ReflectionController {
         data: result,
       });
     } catch (err) {
-      next(new AppError("Fail to catch data", 404));
+      next(new AppError(err.message, 404));
     }
   }
 
@@ -33,6 +33,7 @@ class ReflectionController {
 
   async deleteData(req, res, next) {
     try {
+      console.log(req.params.id);
       const data = { id: req.params.id, owner_id: req.user.id };
       await reflection.deleteOne(data);
 
