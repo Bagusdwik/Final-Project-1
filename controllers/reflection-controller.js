@@ -42,11 +42,12 @@ class ReflectionController {
         message: null,
       });
     } catch (err) {
-      next(new AppError(err.message, 404));
+      next(new AppError(err, 404));
     }
   }
 
   async updateData(req, res, next) {
+    console.log(req.params.id);
     try {
       const { id } = req.params;
       req.body.owner_id = req.user.id;
@@ -60,7 +61,7 @@ class ReflectionController {
         data: result,
       });
     } catch (error) {
-      next(new AppError(error.message, 400));
+      next(new AppError(error, 400));
     }
   }
 }

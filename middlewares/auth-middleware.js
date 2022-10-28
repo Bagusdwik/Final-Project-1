@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const AppError = require("../utils/app.error");
 
 function authentication(req, res, next) {
   try {
@@ -17,10 +18,7 @@ function authentication(req, res, next) {
 
     next();
   } catch (err) {
-    res.send({
-      status: "error",
-      message: err.message,
-    });
+    next(new AppError(err.message, 403));
   }
 }
 
